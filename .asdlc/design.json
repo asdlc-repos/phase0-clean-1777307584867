@@ -1,0 +1,25 @@
+{
+  "overview": "A minimal single-page web application architecture consisting of a static frontend that serves a 'Hello World' greeting to visitors. The application uses a simple web-app component that delivers static HTML content through a browser interface, requiring no backend services or data persistence.",
+  "requirements": [
+    "The application must display 'Hello World' as the main content when a visitor accesses the page",
+    "The page must load and display the message immediately without requiring user interaction",
+    "The layout must be simple and readable across standard web browsers",
+    "The application must support page refresh functionality to redisplay the message",
+    "The application must be accessible via standard HTTP/HTTPS protocols",
+    "The application must provide a health check endpoint for platform monitoring"
+  ],
+  "components": [
+    {
+      "name": "hello-world-web",
+      "componentType": "web-app",
+      "language": "TypeScript / React",
+      "dependsOn": [],
+      "entrypoint": "deployment/web-application",
+      "buildpack": "docker",
+      "appPath": "/hello-world-web",
+      "openAPISpec": "openapi: 3.0.3\ninfo:\n  title: Hello World Web Application\n  description: A simple web application that displays a Hello World message\n  version: 1.0.0\nservers:\n  - url: http://localhost:3000\n    description: Local development server\npaths:\n  /:\n    get:\n      summary: Serve the main Hello World page\n      description: Returns the HTML page displaying the Hello World message\n      operationId: getHomePage\n      responses:\n        '200':\n          description: Successfully returned the Hello World page\n          content:\n            text/html:\n              schema:\n                type: string\n                example: '\u003c!DOCTYPE html\u003e\u003chtml\u003e\u003cbody\u003e\u003ch1\u003eHello World\u003c/h1\u003e\u003c/body\u003e\u003c/html\u003e'\n  /health:\n    get:\n      summary: Health check endpoint\n      description: Returns the health status of the web application\n      operationId: healthCheck\n      responses:\n        '200':\n          description: Application is healthy\n          content:\n            application/json:\n              schema:\n                type: object\n                properties:\n                  status:\n                    type: string\n                    example: ok\n                  timestamp:\n                    type: string\n                    format: date-time\n                    example: '2024-01-15T10:30:00Z'",
+      "componentAgentInstructions": "Implement a React-based single-page web application using TypeScript that displays 'Hello World' to visitors. Use Create React App or Vite as the build tool. The application should have: 1) A main App component that renders a centered 'Hello World' heading using semantic HTML (h1 tag). 2) Basic CSS styling for a clean, readable layout with the message centered both vertically and horizontally on the page. Use a modern sans-serif font and ensure adequate contrast. 3) A /health endpoint served by the same web server that returns JSON with status 'ok' and current timestamp. 4) The application should be served on port 3000 in development and production. 5) Create a production-optimized build with minified assets. 6) Use a lightweight Node.js server (like serve or express) to serve the static build in production. 7) The Dockerfile should use a multi-stage build: first stage builds the React app with Node.js, second stage uses a minimal Node.js runtime to serve the static files. 8) Include proper error boundaries in React to handle any runtime errors gracefully. 9) Ensure the page is responsive and works on mobile and desktop browsers. 10) Set appropriate meta tags for charset, viewport, and description. 11) The page title should be 'Hello World'. 12) No external API calls or data fetching required - this is a purely static greeting page. 13) Include a favicon. 14) Ensure fast load times by keeping bundle size minimal. 15) The health endpoint must be accessible without requiring React Router - implement it at the server level."
+    }
+  ],
+  "sourceSpec": "spec-v1"
+}
